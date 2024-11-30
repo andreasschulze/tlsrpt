@@ -42,7 +42,7 @@ RUN apt-get -y -qq update \
     && install --directory \
                --owner tlsrpt \
                --group tlsrpt \
-         /socket \
+         /tlsrpt/ \
          /var/lib/tlsrpt/ \
          /var/log/tlsrpt/ \
     #
@@ -54,6 +54,9 @@ RUN apt-get -y -qq update \
     # see https://github.com/sys4/tlsrpt/issues/27
     && ln -s ../local/bin/tlsrpt-fetcher /usr/bin/
 
-ENV TLSRPT_RECEIVER_SOCKETNAME=/socket/tlsrpt-receiver
-WORKDIR /tlsrpt
+COPY docker/cmd /cmd
+RUN chmod 0555 /cmd
+CMD ["/cmd"]
+
+WORKDIR /home/tlsrpt
 USER tlsrpt
