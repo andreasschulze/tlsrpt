@@ -1,0 +1,19 @@
+services:
+  tlsrpt-build:
+    build:
+      context: .
+    image: localhost/tlsrpt
+
+  tlsrpt-receiver:
+    command: tlsrpt-receiver
+    environment:
+      TLSRPT_RECEIVER_LOG_LEVEL: debug
+      TLSRPT_RECEIVER_SOCKETNAME: /socket/tlsrpt-receiver
+    image: localhost/tlsrpt
+    volumes:
+    - tlsrpt-receiver-socket:/socket:rw
+    - tlsrpt-receiver-data:/var/lib/tlsrpt:rw
+
+volumes:
+  tlsrpt-receiver-socket:
+  tlsrpt-receiver-data:
