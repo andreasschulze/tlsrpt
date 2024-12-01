@@ -47,7 +47,7 @@ RUN apt-get -y -qq update \
                --owner tlsrpt \
                --group tlsrpt \
          /tlsrpt-receiver-socket/ \
-         /tlsrpt-receiver-data/
+         /tlsrpt-receiver-data/ \
          /var/log/tlsrpt/ \
     && ln -s ../../tlsrpt-receiver-data/ /var/lib/tlsrpt/ \
     #
