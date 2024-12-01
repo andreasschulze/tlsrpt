@@ -30,7 +30,9 @@ the database files.
 ## Debugging
 
 The image contains the [Debian package `sqlite3`](https://packages.debian.org/stable/sqlite3)
-for debugging pruposes. For example, use the following command to dump the
+for debugging purposes. It SHOULD be removed in a production grade environment.
+
+For example, use the following command to dump the
 receivers' database:
 
 ```sh
