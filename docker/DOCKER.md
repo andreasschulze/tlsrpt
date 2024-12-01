@@ -26,3 +26,13 @@ docker-compose up -d tlsrpt-receiver
 
 The Container exports two volumes. One with the socket and a second one holding
 the database files.
+
+## Debugging
+
+The image contains the [Debian package `sqlite3`](https://packages.debian.org/stable/sqlite3)
+for debugging pruposes. For example, use the following command to dump the
+receivers' database:
+
+```sh
+echo .dump | sqlite3 /var/lib/tlsrpt/receiver.sqlite
+```
