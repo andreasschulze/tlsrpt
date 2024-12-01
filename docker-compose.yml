@@ -5,20 +5,20 @@ services:
     image: localhost/tlsrpt
 
   tlsrpt-receiver:
+    entrypoint: /bin/sleep infinity
     environment:
       MODE: receiver
-      TLSRPT_RECEIVER_LOG_LEVEL: debug
+    hostname: tlsrpt-receiver
     image: localhost/tlsrpt
+    restart: always
     volumes:
-    - tlsrpt-receiver-socket:/tlsrpt/socket:rw
     - tlsrpt-receiver-data:/var/lib/tlsrpt:rw
+    - tlsrpt-receiver-socket:/tlsrpt/socket:rw
 
-  postfix:
-    entrypoint: /bin/sleep infinity
-    image: andreasschulze.de/swbase/postfix
+# postfix:
 #   image: localhost/postfix
-    volumes:
-    - tlsrpt-receiver-socket:/var/spool/postfix/tlsrpt:rw
+#   volumes:
+#   - tlsrpt-receiver-socket:/var/spool/postfix/tlsrpt:rw
 
 volumes:
   tlsrpt-receiver-socket:

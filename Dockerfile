@@ -1,5 +1,8 @@
 FROM debian:bookworm-slim AS build
 
+# only suppress warnings from debconf
+ENV DEBIAN_FRONTEND='noninteractive'
+
 WORKDIR /tmp
 
 COPY README.md ./
