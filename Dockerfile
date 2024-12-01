@@ -38,7 +38,7 @@ RUN apt-get -y -qq update \
     && rm -rf /var/lib/apt/lists/* \
     #
     # create a unpriveleged user
-    && useradd --create-home \
+    && useradd --no-create-home \
                --shell /usr/sbin/nologin \
                --user-group tlsrpt \
     #
@@ -46,6 +46,7 @@ RUN apt-get -y -qq update \
     && install --directory \
                --owner tlsrpt \
                --group tlsrpt \
+         /home/tlsrpt/ \
          /tlsrpt-receiver-socket/ \
          /tlsrpt-receiver-data/ \
          /var/log/tlsrpt/ \
