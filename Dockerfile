@@ -49,7 +49,7 @@ RUN apt-get -y -qq update \
          /tlsrpt-receiver-socket/ \
          /tlsrpt-receiver-data/ \
          /var/log/tlsrpt/ \
-    && ln -s ../../tlsrpt-receiver-data/ /var/lib/tlsrpt/ \
+    && ln -s ../../tlsrpt-receiver-data/ /var/lib/tlsrpt \
     #
     # as long as there is no special "all docker logs goes to STDOUT" ...
     && ln -sf /proc/1/fd/1 /var/log/tlsrpt/fetcher.log \
