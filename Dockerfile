@@ -46,9 +46,10 @@ RUN apt-get -y -qq update \
     && install --directory \
                --owner tlsrpt \
                --group tlsrpt \
-         /tlsrpt-socket/ \
-         /var/lib/tlsrpt/ \
+         /tlsrpt-receiver-socket/ \
+         /tlsrpt-receiver-data/
          /var/log/tlsrpt/ \
+    && ln -s ../../tlsrpt-receiver-data/ /var/lib/tlsrpt/ \
     #
     # as long as there is no special "all docker logs goes to STDOUT" ...
     && ln -sf /proc/1/fd/1 /var/log/tlsrpt/fetcher.log \
@@ -56,7 +57,7 @@ RUN apt-get -y -qq update \
     && ln -sf /proc/1/fd/1 /var/log/tlsrpt/reporter.log \
     #
     # see https://github.com/sys4/tlsrpt/issues/26
-    && chmod 0777 /tlsrpt-socket/ \
+    && chmod 0777 /tlsrpt-receiver-socket/ \
     #
     # see https://github.com/sys4/tlsrpt/issues/27
     && ln -s ../local/bin/tlsrpt-fetcher /usr/bin/
