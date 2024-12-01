@@ -3,18 +3,12 @@
 case "${MODE}" in
   receiver)
     if [ -z "${TLSRPT_RECEIVER_SOCKETNAME}" ]; then
-      # In POSIX sh, HOSTNAME is undefined.
-      if [ -z "${HOSTNAME}" ]; then
-        HOSTNAME="$( hostname )"
-        export HOSTNAME
-      fi
-
       # see https://github.com/sys4/tlsrpt/issues/26
       # this way, postfix (and any other user) can write
       install -d --mode 0777 /tlsrpt-socket/
       umask 0000
 
-      TLSRPT_RECEIVER_SOCKETNAME="/tlsrpt-socket/${HOSTNAME}"
+      TLSRPT_RECEIVER_SOCKETNAME='/tlsrpt-socket/tlsrpt-receiver'
       export TLSRPT_RECEIVER_SOCKETNAME
     fi
     cmd='/usr/local/bin/tlsrpt-receiver'
