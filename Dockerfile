@@ -33,6 +33,7 @@ RUN apt-get -y -qq update \
     && apt-get -y -qq install --no-install-recommends \
          libpython3-stdlib \
          python3-minimal \
+         sqlite3 \
     && apt-get -y -qq clean \
     && rm -rf /var/lib/apt/lists/* \
     #
