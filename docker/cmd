@@ -8,7 +8,7 @@ case "${MODE}" in
       install -d --mode 0777 /tlsrpt-socket/
       umask 0000
 
-      TLSRPT_RECEIVER_SOCKETNAME='/tlsrpt-socket/tlsrpt-receiver'
+      TLSRPT_RECEIVER_SOCKETNAME='/tlsrpt-receiver-socket/receiver.socket'
       export TLSRPT_RECEIVER_SOCKETNAME
     fi
     cmd='/usr/local/bin/tlsrpt-receiver'

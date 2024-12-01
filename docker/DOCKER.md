@@ -36,5 +36,5 @@ For example, use the following command to dump the
 receivers' database:
 
 ```sh
-echo .dump | sqlite3 /var/lib/tlsrpt/receiver.sqlite
+echo .dump | sqlite3 /tlsrpt-receiver-data/receiver.sqlite
 ```
