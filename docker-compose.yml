@@ -20,5 +20,5 @@ services:
 #   - tlsrpt-receiver-socket:/var/spool/postfix/tlsrpt:rw
 
 volumes:
-  tlsrpt-receiver-socket:
   tlsrpt-receiver-data:
+  tlsrpt-receiver-socket:
