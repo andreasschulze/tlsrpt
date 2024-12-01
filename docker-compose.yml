@@ -12,7 +12,7 @@ services:
     restart: always
     volumes:
     - tlsrpt-receiver-data:/var/lib/tlsrpt:rw
-    - tlsrpt-receiver-socket:/tlsrpt/socket:rw
+    - tlsrpt-receiver-socket:/tlsrpt-socket:rw
 
 # postfix:
 #   image: localhost/postfix

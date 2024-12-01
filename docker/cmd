@@ -11,10 +11,10 @@ case "${MODE}" in
 
       # see https://github.com/sys4/tlsrpt/issues/26
       # this way, postfix (and any other user) can write
-      install -d --mode 0777 /tlsrpt/socket/
+      install -d --mode 0777 /tlsrpt-socket/
       umask 0000
 
-      TLSRPT_RECEIVER_SOCKETNAME="/tlsrpt/socket/${HOSTNAME}"
+      TLSRPT_RECEIVER_SOCKETNAME="/tlsrpt-socket/${HOSTNAME}"
       export TLSRPT_RECEIVER_SOCKETNAME
     fi
     cmd='/usr/local/bin/tlsrpt-receiver'

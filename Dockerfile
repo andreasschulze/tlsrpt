@@ -46,7 +46,7 @@ RUN apt-get -y -qq update \
     && install --directory \
                --owner tlsrpt \
                --group tlsrpt \
-         /tlsrpt/ \
+         /tlsrpt-socket/ \
          /var/lib/tlsrpt/ \
          /var/log/tlsrpt/ \
     #
@@ -54,6 +54,9 @@ RUN apt-get -y -qq update \
     && ln -sf /proc/1/fd/1 /var/log/tlsrpt/fetcher.log \
     && ln -sf /proc/1/fd/1 /var/log/tlsrpt/receiver.log \
     && ln -sf /proc/1/fd/1 /var/log/tlsrpt/reporter.log \
+    #
+    # see https://github.com/sys4/tlsrpt/issues/26
+    && chmod 0777 /tlsrpt-socket/ \
     #
     # see https://github.com/sys4/tlsrpt/issues/27
     && ln -s ../local/bin/tlsrpt-fetcher /usr/bin/
