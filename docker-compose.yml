@@ -5,7 +5,6 @@ services:
     image: localhost/tlsrpt
 
   tlsrpt-receiver:
-    entrypoint: /bin/sleep infinity
     environment:
       MODE: receiver
     hostname: tlsrpt-receiver
