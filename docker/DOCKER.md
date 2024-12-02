@@ -24,8 +24,18 @@ happen over a unix domain socket created by `tlsrpt-reciver`
 docker-compose up -d tlsrpt-receiver
 ```
 
-The Container exports two volumes. One with the socket and a second one holding
+The Container uses two volumes. One with the socket and a second one persist
 the database files.
+
+## Running the reporter
+
+This mode is active if ENV[MODE] is set to `reporter`.
+
+```sh
+docker-compose up -d tlsrpt-reporter
+```
+
+The Container uses one volume to persist database files.
 
 ## Debugging
 
@@ -36,5 +46,5 @@ For example, use the following command to dump the
 receivers' database:
 
 ```sh
-echo .dump | sqlite3 /tlsrpt-receiver-data/receiver.sqlite
+echo .dump | sqlite3 /tlsrpt-data/receiver.sqlite
 ```
