@@ -7,10 +7,13 @@ case "${MODE}" in
       # this way, postfix (and any other user) can write
       umask 0000
 
-      TLSRPT_RECEIVER_SOCKETNAME='/tlsrpt-receiver-socket/receiver.socket'
+      TLSRPT_RECEIVER_SOCKETNAME='/tlsrpt-socket/receiver.socket'
       export TLSRPT_RECEIVER_SOCKETNAME
     fi
     cmd='/usr/local/bin/tlsrpt-receiver'
+    ;;
+  reporter)
+    cmd='/usr/local/bin/tlsrpt-reporter'
     ;;
   *)
     cmd='/bin/bash'

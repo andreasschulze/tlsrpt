@@ -11,14 +11,30 @@ services:
     image: localhost/tlsrpt
     restart: always
     volumes:
-    - tlsrpt-receiver-data:/tlsrpt-receiver-data:rw
-    - tlsrpt-receiver-socket:/tlsrpt-receiver-socket:rw
+    - tlsrpt-data:/tlsrpt-data:rw
+    - tlsrpt-socket:/tlsrpt-socket:rw
+
+  tlsrpt-reporter:
+    environment:
+      MODE: reporter
+      SSMTP_MAILHUB: mailhub.example:25
+#     SSMTP_USESTARTTLS: enything_even_NO_would_enable_UseSTARTTLS
+#     SSMTP_USETLS: enything_even_NO_would_enable_UseTLS
+      TLSRPT_REPORTER_CONTACT_INFO: a_contact_address_used_inside_the_reports@example.org
+#     TLSRPT_REPORTER_DEBUG_SEND_MAIL_DEST: send_to_yourself_instead_the_external_receiver@example.net
+      TLSRPT_REPORTER_ORGANIZATION_NAME: example.org
+      TLSRPT_REPORTER_SENDER_ADDRESS: '"TLSRPT-Reporter" <tlsrpt-report-sender@example.org>'
+    hostname: tlsrpt-reporter
+    image: localhost/tlsrpt
+    restart: always
+    volumes:
+    - tlsrpt-data:/tlsrpt-data:rw
 
 # postfix:
 #   image: localhost/postfix
 #   volumes:
-#   - tlsrpt-receiver-socket:/var/spool/postfix/tlsrpt:rw
+#   - tlsrpt-socket:/var/spool/postfix/tlsrpt:rw
 
 volumes:
-  tlsrpt-receiver-data:
-  tlsrpt-receiver-socket:
+  tlsrpt-data:
+  tlsrpt-socket:

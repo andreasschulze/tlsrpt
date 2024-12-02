@@ -1,8 +1,5 @@
 FROM debian:bookworm-slim AS build
 
-# only suppress warnings from debconf
-ENV DEBIAN_FRONTEND='noninteractive'
-
 WORKDIR /tmp
 
 COPY README.md ./
@@ -11,7 +8,7 @@ COPY pytlsrpt/ ./pytlsrpt/
 
 # hadolint ignore=DL4006,DL3008
 RUN    apt-get -qq update \
-    && apt-get -y -qq install --no-install-recommends \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y -qq install --no-install-recommends \
          python3-pip \
     && pip3 install \
          --break-system-packages \
@@ -27,15 +24,21 @@ RUN    apt-get -qq update \
 FROM debian:bookworm-slim
 
 COPY --from=build /usr/local/ /usr/local/
+COPY docker/cmd /cmd
+COPY docker/entrypoint /entrypoint
 
 # hadolint ignore=DL3008
 RUN apt-get -y -qq update \
-    && apt-get -y -qq install --no-install-recommends \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y -qq install --no-install-recommends \
          libpython3-stdlib \
          python3-minimal \
+         ssmtp \
          sqlite3 \
     && apt-get -y -qq clean \
     && rm -rf /var/lib/apt/lists/* \
+    #
+    && chmod 0555 /cmd \
+                  /entrypoint \
     #
     # create a unpriveleged user
     && useradd --no-create-home \
@@ -47,10 +50,10 @@ RUN apt-get -y -qq update \
                --owner tlsrpt \
                --group tlsrpt \
          /home/tlsrpt/ \
-         /tlsrpt-receiver-socket/ \
-         /tlsrpt-receiver-data/ \
+         /tlsrpt-data/ \
+         /tlsrpt-socket/ \
          /var/log/tlsrpt/ \
-    && ln -s ../../tlsrpt-receiver-data/ /var/lib/tlsrpt \
+    && ln -s ../../tlsrpt-data/ /var/lib/tlsrpt \
     #
     # as long as there is no special "all docker logs goes to STDOUT" ...
     && ln -sf /proc/1/fd/1 /var/log/tlsrpt/fetcher.log \
@@ -58,14 +61,14 @@ RUN apt-get -y -qq update \
     && ln -sf /proc/1/fd/1 /var/log/tlsrpt/reporter.log \
     #
     # see https://github.com/sys4/tlsrpt/issues/26
-    && chmod 0777 /tlsrpt-receiver-socket/ \
+    && chmod 0777 /tlsrpt-socket/ \
     #
     # see https://github.com/sys4/tlsrpt/issues/27
-    && ln -s ../local/bin/tlsrpt-fetcher /usr/bin/
+    && ln -s ../local/bin/tlsrpt-fetcher /usr/bin/ \
+    #
+    && chown -R tlsrpt /etc/ssmtp/
 
-COPY docker/cmd /cmd
-RUN chmod 0555 /cmd
 CMD ["/cmd"]
-
-WORKDIR /home/tlsrpt
+ENTRYPOINT ["/entrypoint"]
 USER tlsrpt
+WORKDIR /home/tlsrpt
