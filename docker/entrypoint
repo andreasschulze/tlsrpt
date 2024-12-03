@@ -25,8 +25,8 @@ if [ "${MODE}" = 'reporter' ]; then
     exit 1
   fi
   echo "INFO: SSMTP_MAILHUB=${SSMTP_MAILHUB}"
-  echo "mailhub=${SSMTP_MAILHUB}" > /etc/ssmtp/ssmtp.conf
-  # TODO: should there be more checks if ENV[SSMTP_MAILHUB] comply to "host[:port]"
+  echo "mailhub=${SSMTP_MAILHUB}" > /tmp/ssmtp.conf
+  # TODO: should there be more checks if ENV[SSMTP_MAILHUB] match "host[:port]"
 
   # TODO: TLSRPT_REPORTER_SENDER_ADDRESS may contain a display name
   # TODO: that MUST be stripped here. This implementation may not be perfect
@@ -37,17 +37,17 @@ if [ "${MODE}" = 'reporter' ]; then
     exit 1
   fi
   # TODO: more Checks
-  echo "tlsrpt:${_sender}:${SSMTP_MAILHUB}" > /etc/ssmtp/revaliases
+  echo "tlsrpt:${_sender}:${SSMTP_MAILHUB}" > /tmp/revaliases
   unset _sender
 
   if [ -n "${SSMTP_DEBUG}" ]; then
-    echo 'debug=yes' >> /etc/ssmtp/ssmtp.conf
+    echo 'debug=yes' >> /tmp/ssmtp.conf
   fi
   if [ -n "${SSMTP_USETLS}" ]; then
-    echo 'usetls=yes' >> /etc/ssmtp/ssmtp.conf
+    echo 'usetls=yes' >> /tmp/ssmtp.conf
   fi
   if [ -n "${SSMTP_USESTARTTLS}" ]; then
-    echo 'usestarttls=yes' >> /etc/ssmtp/ssmtp.conf
+    echo 'usestarttls=yes' >> /tmp/ssmtp.conf
   fi
 fi
 
