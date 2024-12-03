@@ -66,7 +66,12 @@ RUN apt-get -y -qq update \
     # see https://github.com/sys4/tlsrpt/issues/27
     && ln -s ../local/bin/tlsrpt-fetcher /usr/bin/ \
     #
-    && chown -R tlsrpt /etc/ssmtp/
+    # would be better if the receiver implement smtp instead of submission
+    # via /usr/sbin/sendmail ...
+    && rm -rf /etc/ssmtp/ \
+    && install -d /etc/ssmtp/ \
+    && ln -sf /tmp/ssmtp.conf /etc/ssmtp/ssmtp.conf \
+    && ln -sf /tmp/revaliases /etc/ssmtp/revaliases
 
 CMD ["/cmd"]
 ENTRYPOINT ["/entrypoint"]
