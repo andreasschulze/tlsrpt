@@ -35,7 +35,16 @@ This mode is active if ENV[MODE] is set to `reporter`.
 docker-compose up -d tlsrpt-reporter
 ```
 
-The Container uses one volume to persist database files.
+The Container uses one volume to persist database files. Also, the following
+environment settings are required:
+
+* `SSMTP_MAILHUB`
+
+* `TLSRPT_REPORTER_CONTACT_INFO`
+
+* `TLSRPT_REPORTER_ORGANIZATION_NAME`
+
+* `TLSRPT_REPORTER_SENDER_ADDRESS`
 
 ## Debugging
 
