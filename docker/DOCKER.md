@@ -57,3 +57,6 @@ receivers' database:
 ```sh
 echo .dump | sqlite3 /tlsrpt-data/receiver.sqlite
 ```
+
+The image also contains the  [Debian package `man-db`](https://packages.debian.org/stable/man-db) and some manpages. This SHOULD also be removed in a
+production grade environment.
