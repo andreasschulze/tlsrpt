@@ -24,6 +24,7 @@ RUN    apt-get -qq update \
 FROM debian:bookworm-slim
 
 COPY --from=build /usr/local/ /usr/local/
+COPY doc/manpages/tlsrpt-*.1 /usr/local/share/man/man1/
 COPY docker/cmd /cmd
 COPY docker/entrypoint /entrypoint
 
@@ -31,6 +32,7 @@ COPY docker/entrypoint /entrypoint
 RUN apt-get -y -qq update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y -qq install --no-install-recommends \
          libpython3-stdlib \
+         man-db \
          python3-minimal \
          ssmtp \
          sqlite3 \

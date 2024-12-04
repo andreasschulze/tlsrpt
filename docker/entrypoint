@@ -1,6 +1,16 @@
 #!/bin/sh
 
-if [ "${MODE}" = 'reporter' ]; then
+if [ "${MODE}" = 'receiver' ]; then
+  if [ -z "${TLSRPT_RECEIVER_SOCKETNAME}" ]; then
+    TLSRPT_RECEIVER_SOCKETNAME='/tlsrpt-socket/receiver.socket'
+    export TLSRPT_RECEIVER_SOCKETNAME
+  fi
+  if [ -z "${TLSRPT_RECEIVER_SOCKETMODE}" ]; then
+    # every uid may write to the socket
+    TLSRPT_RECEIVER_SOCKETMODE='0222'
+    export TLSRPT_RECEIVER_SOCKETMODE
+  fi
+elif [ "${MODE}" = 'reporter' ]; then
 
   if [ -z "${TLSRPT_REPORTER_CONTACT_INFO}" ]; then
     echo 'FATAL: ENV[TLSRPT_REPORTER_CONTACT_INFO] is required'
